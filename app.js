@@ -36,13 +36,13 @@ app.get('*', function(req, res) {
 */
 
 app.get('/moneyflows/buy', function(req, res) {
-    wsj.parse(true).then((response) => {
+    wsj.getBuyStocks().then((response) => {
         res.send(response);
     });
 });
 
 app.get('/moneyflows/sell', function(req, res) {
-    wsj.parse(false).then((response) => {
+    wsj.getSellStocks().then((response) => {
         res.send(response);
     });
 });
