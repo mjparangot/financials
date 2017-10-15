@@ -17,7 +17,7 @@ npm start
 
 Get all stocks stored in the database:
 
-`/stocks?sort=<column>&sortOrder=<sortOrder>`
+`/stocks?sort=<field>&sortOrder=<sortOrder>`
 
 - sortOrder=1 for ascending
 - sortOrder=-1 for descending
