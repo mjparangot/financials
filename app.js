@@ -35,6 +35,12 @@ app.get('*', function(req, res) {
 });
 */
 
+app.get('/moneyflows', function(req, res) {
+    wsj.getMoneyflows(true).then((response) => {
+        res.send(response);
+    });
+});
+
 app.get('/moneyflows/buy', function(req, res) {
     wsj.getBuyStocks().then((response) => {
         res.send(response);
