@@ -1,15 +1,7 @@
 var Baby = require('babyparse'),
     fs = require('fs'),
     request = require('request'),
-    mongo = require('mongodb').MongoClient,
-    stockdb;
-
-var url = `mongodb://${process.env.mongo_user}:${process.env.mongo_password}@ds119565.mlab.com:19565/stocks`;
-mongo.connect(url, function(err, db) {
-    if (err) throw err;
-    stockdb = db;
-});
-
+    mongo = require('./mongo');
 
 var getMoneyflows = function(buy) {
     return new Promise((resolve, reject) => {
@@ -60,7 +52,7 @@ var parseMoneyflows = function(data, flow) {
         parsed.push(obj);
         index++;
     }
-    upsertToMongo(parsed);
+    mongo.upsertMoneyflows(parsed);
     return parsed;
 }
 
@@ -85,17 +77,6 @@ var getSellStocks = function() {
                 resolve(parseMoneyflows(data, 'sell'));
             }
         })
-    });
-}
-
-var upsertToMongo = function(data) {
-    data.forEach(function(item, index) {
-        var query = {symbol: data[index].symbol},
-            newValues = data[index],
-            options = {upsert: true};
-        stockdb.collection('moneyflows').findAndModify(query, {}, {$set: newValues}, options, function(err, res) {
-            if (err) throw err;
-        });
     });
 }
 
