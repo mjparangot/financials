@@ -1,20 +1,15 @@
 var Baby = require('babyparse'),
     fs = require('fs'),
+    request = require('request'),
     mongo = require('mongodb').MongoClient,
-    request = require('request');
+    stockdb;
 
-console.log(process.env.mongo_user);
-
-var url = 'mongodb://:@ds119565.mlab.com:19565/stocks',
-    query = {};
+var url = `mongodb://${process.env.mongo_user}:${process.env.mongo_password}@ds119565.mlab.com:19565/stocks`;
 mongo.connect(url, function(err, db) {
     if (err) throw err;
-    db.collection("moneyflows").find(query).toArray(function(err, result) {
-        if (err) throw err;
-        console.log(result);
-        db.close();
-    });
+    stockdb = db;
 });
+
 
 var getMoneyflows = function(buy) {
     return new Promise((resolve, reject) => {
@@ -44,7 +39,7 @@ var parseMoneyflows = function(data) {
         index = 3;
 
     while (data[index] != null) {
-        parsed.push({
+        var obj = {
             company:                data[index][0],
             name:                   data[index][0].substring(0, data[index][0].lastIndexOf('(') - 1),
             symbol:                 data[index][0].substring(data[index][0].lastIndexOf('(') + 1, data[index][0].lastIndexOf(')')),
@@ -61,9 +56,13 @@ var parseMoneyflows = function(data) {
             block_tick_down:        data[index][11],
             block_up_down_ratio:    data[index][9],
             timestamp:              data[0][0].substring(data[0][0].indexOf(',') + 3, data[0][0].length)
-        });
+        };
+        parsed.push(obj);
         index++;
     }
+
+    upsertToMongo(parsed);
+
     return parsed;
 }
 
@@ -88,6 +87,17 @@ var getSellStocks = function() {
                 resolve(parseMoneyflows(data));
             }
         })
+    });
+}
+
+var upsertToMongo = function(data) {
+    data.forEach(function(item, index) {
+        var query = {symbol: data[index].symbol},
+            newValues = data[index],
+            options = {upsert: true};
+        stockdb.collection('moneyflows').findAndModify(query, {}, {$set: newValues}, options, function(err, res) {
+            if (err) throw err;
+        });
     });
 }
 
