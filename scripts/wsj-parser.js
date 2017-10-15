@@ -54,7 +54,7 @@ var parseMoneyflows = function(data, flow) {
     }
     mongo.upsertMoneyflows(parsed);
     return parsed;
-}
+};
 
 var getBuyStocks = function() {
     return new Promise((resolve, reject) => {
@@ -66,7 +66,7 @@ var getBuyStocks = function() {
             }
         })
     });
-}
+};
 
 var getSellStocks = function() {
     return new Promise((resolve, reject) => {
@@ -78,7 +78,7 @@ var getSellStocks = function() {
             }
         })
     });
-}
+};
 
 module.exports = {
     getMoneyflows: getMoneyflows,

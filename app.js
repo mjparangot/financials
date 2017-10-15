@@ -1,17 +1,18 @@
-var express = require('express');
-var path = require('path');
-var compression = require('compression');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var expressValidator = require('express-validator');
-var dotenv = require('dotenv');
+var express = require('express'),
+    path = require('path'),
+    compression = require('compression'),
+    cookieParser = require('cookie-parser'),
+    bodyParser = require('body-parser'),
+    expressValidator = require('express-validator'),
+    dotenv = require('dotenv');
 
 // Load environment variables from .env file
 dotenv.load();
 
-var app = express();
+var wsj = require('./scripts/wsj-parser'),
+    mongo = require('./scripts/mongo');
 
-var wsj = require('./scripts/wsj-parser');
+var app = express();
 
 app.set('port', process.env.PORT || 3000);
 app.use(compression());
@@ -34,6 +35,15 @@ app.get('*', function(req, res) {
     res.redirect('/#' + req.originalUrl);
 });
 */
+
+app.get('/stocks', function(req, res) {
+    var sort = req.query.sort || null,
+        sortOrder = parseInt(req.query.sortOrder) || null;
+    mongo.get(sort, sortOrder).then((response) => {
+        res.send(response);
+    });
+});
+
 
 app.get('/moneyflows', function(req, res) {
     wsj.getMoneyflows(true).then((response) => {
