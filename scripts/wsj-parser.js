@@ -34,10 +34,9 @@ var getMoneyflows = function(buy) {
     })
 };
 
-var parseMoneyflows = function(data) {
+var parseMoneyflows = function(data, flow) {
     var parsed = [],
         index = 3;
-
     while (data[index] != null) {
         var obj = {
             company:                data[index][0],
@@ -55,14 +54,13 @@ var parseMoneyflows = function(data) {
             block_tick_up:          data[index][10],
             block_tick_down:        data[index][11],
             block_up_down_ratio:    data[index][9],
-            timestamp:              data[0][0].substring(data[0][0].indexOf(',') + 3, data[0][0].length)
+            timestamp:              data[0][0].substring(data[0][0].indexOf(',') + 3, data[0][0].length),
+            flow:                   flow
         };
         parsed.push(obj);
         index++;
     }
-
     upsertToMongo(parsed);
-
     return parsed;
 }
 
@@ -72,7 +70,7 @@ var getBuyStocks = function() {
             if (!data) {
                 reject('error');
             } else {
-                resolve(parseMoneyflows(data));
+                resolve(parseMoneyflows(data, 'buy'));
             }
         })
     });
@@ -84,7 +82,7 @@ var getSellStocks = function() {
             if (!data) {
                 reject('error');
             } else {
-                resolve(parseMoneyflows(data));
+                resolve(parseMoneyflows(data, 'sell'));
             }
         })
     });
