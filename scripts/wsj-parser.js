@@ -31,23 +31,23 @@ var parseMoneyflows = function(data, flow) {
         index = 3;
     while (data[index] != null) {
         var obj = {
-            company:                data[index][0],
-            name:                   data[index][0].substring(0, data[index][0].lastIndexOf('(') - 1),
-            symbol:                 data[index][0].substring(data[index][0].lastIndexOf('(') + 1, data[index][0].lastIndexOf(')')),
-            price:                  data[index][1],
-            change:                 data[index][2],
-            percent_change:         data[index][3],
-            one_week_change:        data[index][4],
-            total_money_flow:       data[index][5],
-            total_tick_up:          data[index][6],
-            total_tick_down:        data[index][7],
-            total_up_down_ratio:    data[index][8],
-            block_money_flow:       data[index][9],
-            block_tick_up:          data[index][10],
-            block_tick_down:        data[index][11],
-            block_up_down_ratio:    data[index][9],
-            timestamp:              data[0][0].substring(data[0][0].indexOf(',') + 3, data[0][0].length),
-            flow:                   flow
+            company:                    data[index][0],
+            name:                       data[index][0].substring(0, data[index][0].lastIndexOf('(') - 1),
+            symbol:                     data[index][0].substring(data[index][0].lastIndexOf('(') + 1, data[index][0].lastIndexOf(')')),
+            price:                      parseFloat(data[index][1], 2),
+            change:                     parseFloat(data[index][2], 2),
+            percent_change:             parseFloat(data[index][3], 2),
+            one_week_percent_change:    parseFloat(data[index][4], 2),
+            total_money_flow:           parseFloat(data[index][5], 2),
+            total_tick_up:              parseFloat(data[index][6], 2),
+            total_tick_down:            parseFloat(data[index][7], 2),
+            total_up_down_ratio:        parseFloat(data[index][8], 2),
+            block_trades_money_flow:    parseFloat(data[index][9], 2),
+            block_trades_tick_up:       parseFloat(data[index][10], 2),
+            block_trades_tick_down:     parseFloat(data[index][11], 2),
+            block_trades_up_down_ratio: parseFloat(data[index][12], 2),
+            timestamp:                  data[0][0].substring(data[0][0].indexOf(',') + 3, data[0][0].length),
+            flow:                       flow
         };
         parsed.push(obj);
         index++;
