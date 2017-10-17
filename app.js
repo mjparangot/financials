@@ -39,7 +39,7 @@ app.get('*', function(req, res) {
 app.get('/stocks', function(req, res) {
     var sort = req.query.sort || null,
         sortOrder = parseInt(req.query.sortOrder) || null;
-    mongo.get(sort, sortOrder).then((response) => {
+    mongo.getStocks(sort, sortOrder).then((response) => {
         res.send(response);
     });
 });

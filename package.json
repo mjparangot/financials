@@ -1,7 +1,7 @@
 {
-  "name": "purple-water",
+  "name": "Financials",
   "version": "1.0.0",
-  "description": "My app description",
+  "description": "Stocks and financials",
   "scripts": {
     "start": "node app.js"
   },

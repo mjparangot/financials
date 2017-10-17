@@ -7,7 +7,7 @@ mongo.connect(url, function(err, mongoDB) {
     db = mongoDB;
 });
 
-var get = function(sort, sortOrder) {
+var getStocks = function(sort, sortOrder) {
     return new Promise((resolve, reject) => {
         var mysort = {};
         if (sort && sortOrder) {
@@ -35,6 +35,6 @@ var upsertMoneyflows = function(data) {
 };
 
 module.exports = {
-    get: get,
+    getStocks: getStocks,
     upsertMoneyflows: upsertMoneyflows
 };
