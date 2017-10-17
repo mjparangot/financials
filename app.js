@@ -4,10 +4,6 @@ var express = require('express'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     expressValidator = require('express-validator');
-    //dotenv = require('dotenv');
-
-// Load environment variables from .env file
-//dotenv.load();
 
 var wsj = require('./scripts/wsj-parser'),
     mongo = require('./scripts/mongo');
