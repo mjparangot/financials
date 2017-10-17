@@ -3,11 +3,11 @@ var express = require('express'),
     compression = require('compression'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
-    expressValidator = require('express-validator'),
-    dotenv = require('dotenv');
+    expressValidator = require('express-validator');
+    //dotenv = require('dotenv');
 
 // Load environment variables from .env file
-dotenv.load();
+//dotenv.load();
 
 var wsj = require('./scripts/wsj-parser'),
     mongo = require('./scripts/mongo');
@@ -30,10 +30,11 @@ if (app.get('env') === 'production') {
     });
 }
 
-
-app.get('/', function(req, res) {
-    res.redirect('/#');
+/*
+app.get('*', function(req, res) {
+    res.redirect('/#' + req.originalUrl);
 });
+*/
 
 app.get('/stocks', function(req, res) {
     var sort = req.query.sort || null,
