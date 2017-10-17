@@ -1,5 +1,7 @@
 # Financials
 
+[Link to deployment](http://marketdata.herokuapp.com)
+
 Stock money flow data from [Wall Street Journal](http://www.wsj.com/mdc/public/page/2_3022-mfgppl-moneyflow.html)
 
 Money flows are calculated as the dollar value of composite uptick trades minus the dollar value of downtick trades.  The up/down ratio reflects the value of uptick trades relative to the value of downtick trades.  Money flow, uptick and downtick volume are in millions of US dollars.  Percent change is calculated from the prior day 4 p.m., eastern time, closing price.
