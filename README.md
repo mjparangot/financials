@@ -7,13 +7,23 @@ Stock money flow data from [Wall Street Journal](http://www.wsj.com/mdc/public/p
 Money flows are calculated as the dollar value of composite uptick trades minus the dollar value of downtick trades.  The up/down ratio reflects the value of uptick trades relative to the value of downtick trades.  Money flow, uptick and downtick volume are in millions of US dollars.  Percent change is calculated from the prior day 4 p.m., eastern time, closing price.
 
 ## Configuration
+
+### Install
 ```bash
 git clone https://github.com/mjparangot/financials
 
 npm install
-
-npm start
 ```
+
+### Configure
+
+Update the following environment variables with your mongoDB usercredentials:
+
+`mongo_user`
+`mongo_password`
+
+### Start
+`npm start`
 
 ## Usage
 
