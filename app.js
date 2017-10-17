@@ -30,11 +30,10 @@ if (app.get('env') === 'production') {
     });
 }
 
-/*
-app.get('*', function(req, res) {
-    res.redirect('/#' + req.originalUrl);
+
+app.get('/', function(req, res) {
+    res.redirect('/#');
 });
-*/
 
 app.get('/stocks', function(req, res) {
     var sort = req.query.sort || null,
