@@ -1,6 +1,6 @@
 # Financials
 
-[Link to deployment](http://marketdata.herokuapp.com)
+[Link to deployment](http://marketdata.herokuapp.com/stocks?sort=symbol&sortOrder=1)
 
 Stock money flow data from [Wall Street Journal](http://www.wsj.com/mdc/public/page/2_3022-mfgppl-moneyflow.html)
 
