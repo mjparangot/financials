@@ -17,7 +17,9 @@ npm install
 
 ### Configure
 
-Update the following environment variables with your mongoDB usercredentials:
+Create a Mongo database on [mLab][https://mlab.com/]. Make sure to update the name of your collection in the scripts.
+
+Update the following environment variables with your mongoDB user credentials:
 
 `mongo_user`
 
