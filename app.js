@@ -5,8 +5,9 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     expressValidator = require('express-validator');
 
-var wsj = require('./scripts/wsj-parser'),
-    mongo = require('./scripts/mongo');
+var mongo = require('./scripts/mongo'),
+    processor = require('./scripts/processor'),
+    wsj = require('./scripts/wsj-parser');
 
 var app = express();
 
@@ -17,6 +18,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Start processor
+//processor.start();
 
 // Production error handler
 if (app.get('env') === 'production') {
@@ -36,6 +40,12 @@ app.get('/stocks', function(req, res) {
     var sort = req.query.sort || null,
         sortOrder = parseInt(req.query.sortOrder) || null;
     mongo.getStocks(sort, sortOrder).then((response) => {
+        res.send(response);
+    });
+});
+
+app.get('/stocks/timestamp', function(req, res) {
+    mongo.getStocksByTimestamp().then((response) => {
         res.send(response);
     });
 });

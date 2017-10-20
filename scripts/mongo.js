@@ -1,4 +1,5 @@
-var mongo = require('mongodb').MongoClient,
+var moment = require('moment'),
+    mongo = require('mongodb').MongoClient,
     url = `mongodb://${process.env.mongo_user}:${process.env.mongo_password}@ds141464.mlab.com:41464/financials`,
     db;
 
@@ -23,6 +24,21 @@ var getStocks = function(sort, sortOrder) {
     });
 };
 
+var getStocksByTimestamp = function() {
+    return new Promise((resolve, reject) => {
+        var query = {
+            "timestamp": {"$gte": moment().subtract(5, 'hours').toDate()}
+        };
+        db.collection('stocks').find(query).toArray(function(err, result) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result);
+            }
+        });
+    });
+}
+
 var upsertMoneyflows = function(data) {
     data.forEach(function(item, index) {
         var query = {symbol: data[index].symbol},
@@ -36,5 +52,6 @@ var upsertMoneyflows = function(data) {
 
 module.exports = {
     getStocks: getStocks,
+    getStocksByTimestamp: getStocksByTimestamp,
     upsertMoneyflows: upsertMoneyflows
 };

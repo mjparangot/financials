@@ -1,6 +1,7 @@
 var Baby = require('babyparse'),
     fs = require('fs'),
     request = require('request'),
+    moment = require('moment'),
     mongo = require('./mongo');
 
 var getMoneyflows = function(buy) {
@@ -46,7 +47,7 @@ var parseMoneyflows = function(data, flow) {
             block_trades_tick_up:       parseFloat(data[index][10], 2),
             block_trades_tick_down:     parseFloat(data[index][11], 2),
             block_trades_up_down_ratio: parseFloat(data[index][12], 2),
-            timestamp:                  data[0][0].substring(data[0][0].indexOf(',') + 3, data[0][0].length),
+            timestamp:                  moment(data[0][0].substring(data[0][0].indexOf(',') + 3, data[0][0].length), 'MMMM DD, YYYY h:mm a ET').toDate(),
             flow:                       flow
         };
         parsed.push(obj);
